@@ -1,0 +1,4 @@
+#ignore somes stuff
+
+dist/
+node_modules/
