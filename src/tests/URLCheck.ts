@@ -1,4 +1,8 @@
+import React from 'react';
+import { SettingsContext } from '../settings';
+
 export default function URLCheck() {
-  console.log(localStorage.getItem('api_key'));
-  return false;
+    const api_key = React.useContext(SettingsContext).APIKey;
+    console.log(api_key);
+    return false;
 }
