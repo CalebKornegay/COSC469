@@ -38,12 +38,19 @@
 } */
 
 .App {
-  color: white;
+  color: black;
   text-align: center;
 }
 
+.SettingsDropdown {
+    background-color: grey;
+    position: absolute;
+    right: 5%;
+    top: 5%;
+}
+
 .container {
-  width: 15rem;
-  height: 15rem;
-  background-color: green;
+  width: 20rem;
+  height: 20rem;
+  background-color: white;
 }
