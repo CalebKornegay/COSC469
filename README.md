@@ -1,4 +1,4 @@
-# COSC 469 Anti-Phishin Browser Extension (APeBEhavior)
+# COSC 469 Anti-Phishin Browsin-Extension (APeBEhavior)
 
 We are trying to stop people from getting phished using ape methods.
 
