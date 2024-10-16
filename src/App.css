@@ -37,6 +37,14 @@
   }
 } */
 
+:root {
+  --default: #333;
+  --red: #e84855;
+  --yellow: #ffd23f;
+  --blue: #3bceac;
+  --jade: #0ead69;
+}
+
 .App {
   color: black;
   text-align: center;
@@ -49,16 +57,43 @@
 }
 
 .SettingsDropdown {
+<<<<<<< HEAD
     background-color: white;
     position: absolute;
     width: fit-content;
     height: fit-content;
     right: 5%;
     top: 5%;
+=======
+  background-color: grey;
+  position: absolute;
+  right: 5%;
+  top: 5%;
+>>>>>>> d9a5114898c300dafc8c067268d2798a97a52a6a
 }
 
 .container {
   width: 20rem;
   height: 20rem;
-  background-color: white;
+  background-color: var(--default);
+}
+
+.AppHeader {
+  min-height: 10vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+.TestList {
+  color: white;
+}
+
+.TestItem {
+  display: "flex";
+  justify-content: "space-between";
+  border-bottom: "1px solid #ccc";
+  padding: "8px 0";
 }
