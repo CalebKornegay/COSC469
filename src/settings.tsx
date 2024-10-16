@@ -1,14 +1,6 @@
 import React, {useRef} from 'react';
 
-export type UserSettings = {
-    APIKey: string | undefined,
-    runtype: string | undefined,
-};
-
-export const SettingsContext = React.createContext<UserSettings>({APIKey: undefined, runtype: undefined});
-
 export default function Settings() {
-    const user_settings = React.useContext(SettingsContext);
     const [settingsOpen, setSettingsOpen] = React.useState(false);
     const [inputValue, setInputValue] = React.useState(
         localStorage.getItem('api_key') || ''
