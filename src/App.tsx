@@ -10,6 +10,11 @@ export default function App() {
         <div className="App">
             <Settings />
             <p>{user_settings?.APIKey}</p>
+            <div className="AppHeader">
+                ApeBehavior
+            </div>
+
+            <Tests />
         </div>
     );
 }
