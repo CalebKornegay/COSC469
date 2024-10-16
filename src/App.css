@@ -51,18 +51,18 @@
 }
 
 .APIInput {
-    flex-direction: row;
-    align-items: center;
-    align-content: center;
+  flex-direction: row;
+  align-items: center;
+  align-content: center;
 }
 
 .SettingsDropdown {
-    background-color: white;
-    position: absolute;
-    width: fit-content;
-    height: fit-content;
-    right: 5%;
-    top: 5%;
+  background-color: white;
+  position: absolute;
+  width: fit-content;
+  height: fit-content;
+  right: 5%;
+  top: 5%;
 }
 
 .container {
@@ -89,4 +89,15 @@
   justify-content: "space-between";
   border-bottom: "1px solid #ccc";
   padding: "8px 0";
+}
+
+.RunTestsButton {
+  background-color: #4caf50;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
 }

@@ -18,22 +18,36 @@ export default function Tests() {
     { name: "Test 2", status: "fail" },
     { name: "Test 3", status: "pending" },
   ]);
+  const [buttonMessage, setButtonMessage] = useState("Run Tests");
+
+  const runTests = () => {
+    setButtonMessage("Running...");
+    if (buttonMessage === "Running...") return;
+    return;
+  };
+
   return (
-    <ul className="TestList">
-      {tests.map((test, index) => (
-        <li
-          key={index}
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            borderBottom: "1px solid #ccc",
-            padding: "1rem 0",
-          }}
-        >
-          <span>{test.name}</span>
-          <span>{statusIcons[test.status]}</span>
-        </li>
-      ))}
-    </ul>
+    <>
+      <div className="RunTestsButton" onClick={runTests}>
+        {buttonMessage}
+      </div>
+
+      <ul className="TestList">
+        {tests.map((test, index) => (
+          <li
+            key={index}
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              borderBottom: "1px solid #ccc",
+              padding: "1rem 0",
+            }}
+          >
+            <span>{test.name}</span>
+            <span>{statusIcons[test.status]}</span>
+          </li>
+        ))}
+      </ul>
+    </>
   );
 }
