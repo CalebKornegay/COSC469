@@ -1,8 +1,7 @@
 Different types of checks:
 ----------------------------
-check against known site db
-URL spellcheck 
-spellcheck on current page
+check against known site db - CheckAgainstDatabase.ts
 Is URL off by a couple characters from a known brand - URLCheck.ts
 Broken or misleading links/<a > tags
 brand analysis
+ML based approach
