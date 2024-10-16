@@ -11,13 +11,24 @@ export default function Settings() {
     const user_settings = React.useContext(SettingsContext);
     const [settingsOpen, setSettingsOpen] = React.useState(false);
 
+    React.useEffect(() => {
+        if (user_settings?.APIKey) {
+            localStorage.setItem("api_key", user_settings.APIKey ?? "undefined");
+        } else {
+            localStorage.getItem("api_key");
+        }
+    },
+    [user_settings])
+
     return (
         <div className="SettingsDropdown">
             <button onClick={() => setSettingsOpen(!settingsOpen)}>Settings</button>
             {settingsOpen ? 
-            <p>Hello</p>
+            <div className='APIInput'>
+            <label>Enter your ChatGPT API Key: </label>
+            <input name="api_input" id="api_input" type="text" value={user_settings.APIKey}></input>
+            </div>
             : null}
-            {/* <input name="api_input" id="api_input" type="text" value={user_settings.APIKey}>Enter your ChatGPT API Key: </input> */}
         </div>
     );
 }

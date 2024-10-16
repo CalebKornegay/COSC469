@@ -9,7 +9,7 @@ export default function App() {
     return (
         <div className="App">
             <Settings />
-            <p>Hello World</p>
+            <p>{user_settings?.APIKey}</p>
         </div>
     );
 }
