@@ -1,0 +1,8 @@
+Different types of checks:
+----------------------------
+check against known site db
+URL spellcheck 
+spellcheck on current page
+Is URL off by a couple characters from a known brand
+Broken or misleading links/<a > tags
+brand analysis
