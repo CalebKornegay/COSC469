@@ -1,103 +1,64 @@
-/* .App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-} */
-
 :root {
-  --default: #333;
-  --red: #e84855;
-  --yellow: #ffd23f;
-  --blue: #3bceac;
-  --jade: #0ead69;
+    --default: #333;
+    --red: #e84855;
+    --yellow: #ffd23f;
+    --blue: #3bceac;
+    --jade: #0ead69;
 }
 
 .App {
-  color: black;
-  text-align: center;
+    color: black;
+    text-align: center;
 }
 
 .APIInput {
-  flex-direction: row;
-  align-items: center;
-  align-content: center;
+    flex-direction: row;
+    align-items: center;
+    align-content: center;
 }
 
 .SettingsDropdown {
-  background-color: white;
-  position: absolute;
-  width: fit-content;
-  height: fit-content;
-  right: 5%;
-  top: 5%;
+    background-color: white;
+    position: absolute;
+    width: fit-content;
+    height: fit-content;
+    right: 5%;
+    top: 5%;
 }
 
 .container {
-  width: 20rem;
-  height: 20rem;
-  background-color: var(--default);
+    width: 20rem;
+    height: 20rem;
+    background-color: var(--default);
 }
 
 .AppHeader {
-  min-height: 10vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+    min-height: 10vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
 }
 .TestList {
-  color: white;
+    color: white;
 }
 
 .TestItem {
-  display: "flex";
-  justify-content: "space-between";
-  border-bottom: "1px solid #ccc";
-  padding: "8px 0";
+    display: "flex";
+    justify-content: "space-between";
+    border-bottom: "1px solid #ccc";
+    padding: "8px 0";
 }
 
 .RunTestsButton {
-  background-color: #4caf50;
-  border: none;
-  color: white;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
+    background-color: #4caf50;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
 }

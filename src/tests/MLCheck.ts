@@ -4,5 +4,5 @@ export default async function MLCheck() {
     const currenturl = await getCurrentTabURL();
 
 
-  return false;
+    return false;
 }
