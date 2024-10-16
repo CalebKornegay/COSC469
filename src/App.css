@@ -57,19 +57,12 @@
 }
 
 .SettingsDropdown {
-<<<<<<< HEAD
     background-color: white;
     position: absolute;
     width: fit-content;
     height: fit-content;
     right: 5%;
     top: 5%;
-=======
-  background-color: grey;
-  position: absolute;
-  right: 5%;
-  top: 5%;
->>>>>>> d9a5114898c300dafc8c067268d2798a97a52a6a
 }
 
 .container {
