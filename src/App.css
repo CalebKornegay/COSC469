@@ -44,13 +44,6 @@
     padding-top: 10px;
 }
 
-.SettingsDropdownClosed {
-    position: absolute;
-    right: 5%;
-    top: 5%;
-    border: none;
-}
-
 .container {
     width: 25rem;
     height: 30rem;
