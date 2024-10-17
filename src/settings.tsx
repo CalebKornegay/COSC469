@@ -19,7 +19,7 @@ export default function Settings({settingsOpen, setSettingsOpen}: childprops) {
     };
 
     return (
-        <div className={settingsOpen ? "SettingsDropdownOpen" : "SettingsDropdownClosed"}>
+        <div className={settingsOpen ? "SettingsDropdownOpen" : ""}>
             <button className="SettingsButton" onClick={() => setSettingsOpen(!settingsOpen)}>Settings</button>
             {settingsOpen ? 
             <>
