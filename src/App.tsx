@@ -12,16 +12,20 @@ const Main = styled.div<{ bgcolor: string }>`
 `;
 
 export default function App() {
+    const [settingsOpen, setSettingsOpen] = React.useState(false);
     const [color, setColor] = React.useState("#333");
     return (
         <div className="App">
             <Main bgcolor={color}>
-                <Settings />
                 <div className="AppHeader">
                     ApeBehavior
                 </div>
+                <Settings settingsOpen={settingsOpen} setSettingsOpen={setSettingsOpen}/>
 
-                <Tests colorUpdateFunction={setColor} />
+                {
+                    settingsOpen ? null :
+                    <Tests colorUpdateFunction={setColor} />
+                }
             </Main>
         </div>
     );
