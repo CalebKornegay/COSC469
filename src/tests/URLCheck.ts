@@ -6,7 +6,7 @@ export default async function URLCheck() {
 
     const response = await GPTQuery("Does this site look like a phishing URL? Answer 'Yes' or 'No' only please: " + currenturl);
 
-    if (response == "No") {
+    if (response === "No") {
         return true;
     }
     else {
