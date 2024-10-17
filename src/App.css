@@ -27,8 +27,8 @@
 }
 
 .container {
-    width: 20rem;
-    height: 20rem;
+    width: 25rem;
+    height: 30rem;
     background-color: var(--default);
 }
 
@@ -43,13 +43,12 @@
 }
 .TestList {
     color: white;
-}
+    margin-top: .5rem;
+    margin-bottom: .5rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    padding: 1rem;
 
-.TestItem {
-    display: "flex";
-    justify-content: "space-between";
-    border-bottom: "1px solid #ccc";
-    padding: "8px 0";
 }
 
 .RunTestsButton {

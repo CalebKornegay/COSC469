@@ -75,7 +75,10 @@ export default function Tests() {
                 display: "flex",
                 justifyContent: "space-between",
                 borderBottom: "1px solid #ccc",
-                padding: "1rem 0",
+                padding: "1rem",
+                marginLeft: "1rem",
+                marginRight: "1rem",
+                fontSize: "1rem",
                 }}
             >
                 <span>{test.name}</span>
