@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {colors} from "../colors";
+import {colors} from "../const/colors";
 import * as TestFiles from "../tests";
 
 const statusIcons = {
