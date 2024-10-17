@@ -1,5 +1,5 @@
-import React from "react";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
+import {colors} from "../colors";
 import * as TestFiles from "../tests";
 
 const statusIcons = {
@@ -8,12 +8,18 @@ const statusIcons = {
     pending: "⏳",
 };
 
+type TestState = "pass" | "fail" | "pending";
+
 type Test = {
     name: String;
-    status: "pass" | "fail" | "pending";
+    status: TestState;
 };
 
-export default function Tests() {
+type TestProps = {
+    colorUpdateFunction: (color: string) => void;
+};
+
+export default function Tests({ colorUpdateFunction }: TestProps) {
     const testEntries = Object.entries(TestFiles);
 
     const [tests, setTests] = useState<Test[]>(() =>
@@ -21,10 +27,22 @@ export default function Tests() {
     );
 
     const [buttonMessage, setButtonMessage] = useState("Run Tests");
+    const [testState, setTestState] = useState<TestState | undefined>(undefined);
+
+    const checkTests = (tests: Test[]): boolean => {
+        for (let i = 0; i < tests.length; i++) {
+            if (tests[i].status === "fail") {
+                return false;
+            }
+        }
+        return true;
+    };
 
     const runTests = async () => {
         if (buttonMessage === "Running...") return;
         setButtonMessage("Running...");
+        setTestState("pending");
+        
 
         // Reset all test statuses to pending
         setTests((prevTests) =>
@@ -58,8 +76,29 @@ export default function Tests() {
 
         await Promise.all(promises);
 
+        
+        setTests((prevTests) => {
+            const allPassed = checkTests(prevTests);
+            setTestState(allPassed ? "pass" : "fail");
+            return prevTests;
+        });
+        
         setButtonMessage("Run Tests");
     };
+
+    useEffect(() => {
+        console.log(testState);
+        if (testState === "pass") {
+        colorUpdateFunction(colors.jade);
+        } else if (testState === "fail") {
+        colorUpdateFunction(colors.red);
+        }
+        else if (testState === "pending") {
+        colorUpdateFunction(colors.yellow);
+        }
+        else {
+        colorUpdateFunction(colors.default);
+        }}, [colorUpdateFunction, testState]);
 
     return (
         <>
