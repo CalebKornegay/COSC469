@@ -24,7 +24,7 @@ export default function Settings({settingsOpen, setSettingsOpen}: childprops) {
             {settingsOpen ? 
             <>
                 <div className='APIInput'>
-                <label>ChatGPT API Key: </label>
+                <label>OpenAI API Key: </label>
                 <input name="api_input" id="api_input" type="text" value={inputValue} onChange={handleChange}></input>
                 </div>
             </>
