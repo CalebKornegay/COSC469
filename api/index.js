@@ -12,30 +12,34 @@ const logRequest = (req, res, next) => {
 
 async function get_peer_certificate(url) {
     return new Promise( (resolve, reject) => {
-        const socket = tls.connect({host: url, port: 443, rejectUnauthorized: false, servername: 'localhost'}, () => {
-            const cert = socket.getPeerCertificate(true);
-            const response = {
-                CN: cert?.subject?.CN,
-                issuer: cert?.issuer,
-                issuerInfo: cert?.infoAccess,
-                CCC1: {
-                    subject: cert?.issuerCertificate?.subject,
-                    issuer: cert?.issuerCertificate?.issuer,
-                    issuerInfo: cert?.issuerCertificate?.infoAccess
-                },
-                CCC2: {
-                    subject: cert?.issuerCertificate?.issuerCertificate?.subject,
-                    issuer: cert?.issuerCertificate?.issuerCertificate?.issuer,
-                    issuerInfo: cert?.issuerCertificate?.issuerCertificate?.infoAccess
-                },
-                CCC3: {
-                    subject: cert?.issuerCertificate?.issuerCertificate?.issuerCertificate.subject,
-                    issuerInfo: cert?.issuerCertificate?.issuerCertificate?.issuerCertificate.infoAccess
-                }
-            };
-            // console.log(JSON.stringify(response));
-            resolve(JSON.stringify(response));
-        })
+        try {
+            const socket = tls.connect({host: url, port: 443, rejectUnauthorized: false, servername: 'localhost'}, () => {
+                const cert = socket.getPeerCertificate(true);
+                const response = {
+                    CN: cert?.subject?.CN,
+                    issuer: cert?.issuer,
+                    issuerInfo: cert?.infoAccess,
+                    CCC1: {
+                        subject: cert?.issuerCertificate?.subject,
+                        issuer: cert?.issuerCertificate?.issuer,
+                        issuerInfo: cert?.issuerCertificate?.infoAccess
+                    },
+                    CCC2: {
+                        subject: cert?.issuerCertificate?.issuerCertificate?.subject,
+                        issuer: cert?.issuerCertificate?.issuerCertificate?.issuer,
+                        issuerInfo: cert?.issuerCertificate?.issuerCertificate?.infoAccess
+                    },
+                    CCC3: {
+                        subject: cert?.issuerCertificate?.issuerCertificate?.issuerCertificate?.subject,
+                        issuerInfo: cert?.issuerCertificate?.issuerCertificate?.issuerCertificate?.infoAccess
+                    }
+                };
+                // console.log(JSON.stringify(response));
+                resolve(JSON.stringify(response));
+            });
+        } catch (error) {
+            reject(JSON.stringify({reason : error}));
+        }
     });
 }
 
