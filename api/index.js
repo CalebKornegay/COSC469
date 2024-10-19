@@ -86,7 +86,11 @@ app.get("/cert", async (req, res) => {
     if (!url) {
         return res.status(400).send({ error : "url parameter is required" });
     }
-    return res.send(await get_peer_certificate(url));
+    try {
+        return res.send({ cert: await get_peer_certificate(url)});
+    } catch(error) {
+        return res.status(400).send( { error: error });
+    }
 });
 
 app.listen(port, () => {
