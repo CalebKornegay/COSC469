@@ -3,6 +3,7 @@
 # Save the directory where the script is located
 SCRIPT_DIR=$(dirname "$(realpath "$0")")
 
+touch "$SCRIPT_DIR/ALL-feeds-URLS.lst" && \
 curl -sSL -o "$SCRIPT_DIR/ALL-phishing-links.tar.gz" https://github.com/mitchellkrogza/Phishing.Database/raw/refs/heads/master/ALL-phishing-links.tar.gz && \
 tar -xf "$SCRIPT_DIR/ALL-phishing-links.tar.gz" -C "$SCRIPT_DIR" && \
 rm "$SCRIPT_DIR/ALL-feeds-URLS.lst" && \
