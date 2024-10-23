@@ -5,13 +5,13 @@ export default async function CheckAgainstDatabase(): Promise<boolean> {
 
     try {
         const currenturl = await getCurrentTabURL();
-        let httpurl = currenturl.replace("https", "http");
+        let httpurl = currenturl.replace("https://", "http://");
 
         const response = await fetch(baseurl + httpurl);
         const data = await response.json();
 
         if (data["error"]) return true;
-        if (data["isKnown"] === 0) return true;
+        if (data["isKnownPhishingSite"] === 0) return true;
         return false;
     } catch (error) {
         console.error("Error:", error);

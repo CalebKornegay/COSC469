@@ -78,7 +78,7 @@ app.get("/check", async (req, res) => {
     }
 
     const isInFile = await isUrlInFile("ALL-feeds-URLS.lst", url);
-	return res.send({isKnown: isInFile});
+	return res.send({isKnownPhishingSite: isInFile});
 });
 
 app.get("/cert", async (req, res) => {

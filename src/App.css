@@ -59,6 +59,11 @@
     font-size: calc(10px + 2vmin);
     color: white;
 }
+.AppSubheader {
+    color: white;
+    font-size: calc(5px + 2vmin);
+    margin-bottom: 1rem;
+}
 
 .TestList {
     color: white;
