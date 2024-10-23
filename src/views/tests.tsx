@@ -87,7 +87,7 @@ export default function Tests({ colorUpdateFunction }: TestProps) {
     };
 
     useEffect(() => {
-        console.log(testState);
+        // console.log(testState);
         if (testState === "pass") {
         colorUpdateFunction(colors.jade);
         } else if (testState === "fail") {

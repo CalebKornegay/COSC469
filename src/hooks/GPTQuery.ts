@@ -7,13 +7,15 @@ export default async function GPTQuery(query:string) {
         apiKey: api_key ?? undefined,
         dangerouslyAllowBrowser: true,
     });
-    const completion = await openai.chat.completions.create({
-        messages: [{ role: "system", content: query }],
-        model: "gpt-4o",
+
+    return new Promise( (resolve, reject) => {
+        openai.chat.completions.create({
+            messages: [{ role: "system", content: query }],
+            model: "gpt-4o",
+        }).then((resp => {
+            resolve(resp?.choices?.[0]?.message?.content ?? "Yes");
+        })).catch((_ => {
+            resolve("Yes");
+        }));
     });
-    
-    console.log(completion.choices[0]);
-
-    return completion.choices[0].message.content; // Return the response content from ChatGPT
-
 }

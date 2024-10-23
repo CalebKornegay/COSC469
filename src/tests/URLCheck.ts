@@ -12,7 +12,4 @@ export default async function URLCheck() {
     else {
         return false;
     }
-
-    // return false;
-
 }
