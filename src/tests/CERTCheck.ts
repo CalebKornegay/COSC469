@@ -8,4 +8,5 @@ export default async function CERTCheck() {
     const resp = await fetch(`https://phish.gannaway.co/cert/url=${query_url}`);
     const json: any = await resp.json();
     console.log(json);
+    return false;
 }
