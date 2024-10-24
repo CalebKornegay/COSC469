@@ -1,7 +1,7 @@
 import getCurrentTabURL from "../hooks/getCurrentTabURL";
 
 export default async function CheckAgainstDatabase(): Promise<boolean> {
-    const baseurl = "https://phish.gannaway.co/check/?url=";
+    const baseurl = "https://phish.gannaway.co/db/?url=";
 
     try {
         const currenturl = await getCurrentTabURL();

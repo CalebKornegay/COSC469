@@ -2,6 +2,7 @@ const express = require("express");
 const fs = require('fs');
 const readline = require('readline');
 const tls = require('tls');
+const { spawn } = require('child_process');
 
 const port = process.env.PORT || 6969;
 
@@ -71,7 +72,7 @@ app.get("/", (req, res) => {
     res.send("Hello From Express");
 });
 
-app.get("/check", async (req, res) => {
+app.get("/db", async (req, res) => {
     const { url } = req.query;
     if (!url) {
         return res.status(400).send({ error: "url parameter is required" });
@@ -91,6 +92,53 @@ app.get("/cert", async (req, res) => {
     } catch(error) {
         return res.status(400).send( { error: error });
     }
+});
+
+app.get("/ml", async (req, res) => {
+    const { url } = req.query;
+    if (!url) {
+        return res.status(400).send({ error: "url parameter is required" });
+    }
+
+    //perform input sanitization
+    await url.replaceAll("\"", "");
+    await url.replaceAll("'", "");
+    await url.replaceAll(";", "");
+    await url.replaceAll(":", "");
+    await url.replaceAll(" ", "");
+    await url.replaceAll("&", "");
+    await url.replaceAll("|", "");
+    await url.replaceAll(">", "");
+    await url.replaceAll("<", "");
+    await url.replaceAll("(", "");
+    await url.replaceAll(")", "");
+    await url.replaceAll("{", "");
+    await url.replaceAll("}", "");
+    await url.replaceAll("[", "");
+    await url.replaceAll("]", "");
+
+    //perform ML model call
+    const child = spawn('python3', ['feature_extraction.py', url]);
+
+    let childstdout = '';
+    let childstderr = '';
+
+    child.stdout.on('data', (data) => {
+        childstdout += data;
+    });
+
+    child.stderr.on('data', (data) => {
+        childstderr += data;
+    });
+
+    child.on('close', (code) => {
+        if (code === 0) {
+            return res.send({ isPhishing: childstdout });
+        } else {
+            return res.status(400).send({ error: childstderr });
+        }
+    });
+
 });
 
 app.listen(port, () => {
