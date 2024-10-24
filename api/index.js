@@ -98,27 +98,11 @@ app.get("/ml", async (req, res) => {
     let { url } = req.query;
     if (!url) {
         return res.status(400).send({ error: "url parameter is required" });
-    }
+    }    
 
-    //perform input sanitization
-    url = await url.replaceAll("\"", "");
-    url = await url.replaceAll("'", "");
-    url = await url.replaceAll(";", "");
-    url = await url.replaceAll(":", "");
-    url = await url.replaceAll(" ", "");
-    url = await url.replaceAll("&", "");
-    url = await url.replaceAll("|", "");
-    url = await url.replaceAll(">", "");
-    url = await url.replaceAll("<", "");
-    url = await url.replaceAll("(", "");
-    url = await url.replaceAll(")", "");
-    url = await url.replaceAll("{", "");
-    url = await url.replaceAll("}", "");
-    url = await url.replaceAll("[", "");
-    url = await url.replaceAll("]", "");
-
-    //perform ML model call
-    const child = spawn('python3', ['feature_extraction.py', url]);
+    const child = spawn('python3', ['feature_extraction.py', url], {
+        shell: false,
+    });
 
     let childstdout = '';
     let childstderr = '';
