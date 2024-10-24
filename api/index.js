@@ -95,27 +95,27 @@ app.get("/cert", async (req, res) => {
 });
 
 app.get("/ml", async (req, res) => {
-    const { url } = req.query;
+    let { url } = req.query;
     if (!url) {
         return res.status(400).send({ error: "url parameter is required" });
     }
 
     //perform input sanitization
-    await url.replaceAll("\"", "");
-    await url.replaceAll("'", "");
-    await url.replaceAll(";", "");
-    await url.replaceAll(":", "");
-    await url.replaceAll(" ", "");
-    await url.replaceAll("&", "");
-    await url.replaceAll("|", "");
-    await url.replaceAll(">", "");
-    await url.replaceAll("<", "");
-    await url.replaceAll("(", "");
-    await url.replaceAll(")", "");
-    await url.replaceAll("{", "");
-    await url.replaceAll("}", "");
-    await url.replaceAll("[", "");
-    await url.replaceAll("]", "");
+    url = await url.replaceAll("\"", "");
+    url = await url.replaceAll("'", "");
+    url = await url.replaceAll(";", "");
+    url = await url.replaceAll(":", "");
+    url = await url.replaceAll(" ", "");
+    url = await url.replaceAll("&", "");
+    url = await url.replaceAll("|", "");
+    url = await url.replaceAll(">", "");
+    url = await url.replaceAll("<", "");
+    url = await url.replaceAll("(", "");
+    url = await url.replaceAll(")", "");
+    url = await url.replaceAll("{", "");
+    url = await url.replaceAll("}", "");
+    url = await url.replaceAll("[", "");
+    url = await url.replaceAll("]", "");
 
     //perform ML model call
     const child = spawn('python3', ['feature_extraction.py', url]);
@@ -133,6 +133,7 @@ app.get("/ml", async (req, res) => {
 
     child.on('close', (code) => {
         if (code === 0) {
+            childstdout = childstdout.replace(/\r?\n|\r/g, "");
             return res.send({ isPhishing: childstdout });
         } else {
             return res.status(400).send({ error: childstderr });
