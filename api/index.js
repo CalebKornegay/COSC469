@@ -100,7 +100,7 @@ app.get("/ml", async (req, res) => {
         return res.status(400).send({ error: "url parameter is required" });
     }    
 
-    const child = spawn('python3', ['feature_extraction.py', url], {
+    const child = spawn('python3', ['../python/checkurl.py', url], {
         shell: false,
     });
 
