@@ -1,130 +1,134 @@
 import React, { useEffect, useState } from "react";
-import {COLORS} from "../const";
+import { COLORS } from "../const";
 import * as TestFiles from "../tests";
+import { Test, TestState } from "../types";
 
 const statusIcons = {
-    pass: "✔",
-    fail: "✘",
-    pending: "⏳",
-};
-
-type TestState = "pass" | "fail" | "pending";
-
-type Test = {
-    name: String;
-    status: TestState;
+  [TestState.PASS]: "✔",
+  [TestState.FAIL]: "✘",
+  [TestState.PENDING]: "⏳",
+  [TestState.DISABLED]: "🚫",
+  [TestState.UNKNOWN]: "❔",
 };
 
 type TestProps = {
-    colorUpdateFunction: (color: string) => void;
+  colorUpdateFunction: (color: string) => void;
 };
 
 export default function Tests({ colorUpdateFunction }: TestProps) {
-    const testEntries = Object.entries(TestFiles);
+  const testEntries = Object.entries(TestFiles);
 
-    const [tests, setTests] = useState<Test[]>(() =>
-        testEntries.map(([name]) => ({ name, status: "pending" }))
+  const [tests, setTests] = useState<Test[]>(() =>
+    testEntries.map(([name]) => ({ name, status: TestState.UNKNOWN }))
+  );
+
+  const [buttonMessage, setButtonMessage] = useState("Run Tests");
+  const [testState, setTestState] = useState<TestState>(TestState.UNKNOWN);
+
+  // Function to determine the overall test state
+  const checkTests = (tests: Test[]): TestState => {
+    if (tests.some((test) => test.status === TestState.PENDING)) {
+      return TestState.PENDING;
+    }
+    // All tests have completed
+    if (tests.some((test) => test.status === TestState.FAIL)) {
+      return TestState.FAIL;
+    } else if (tests.every((test) => test.status === TestState.DISABLED)) {
+      return TestState.DISABLED;
+    } else if (tests.every((test) => test.status === TestState.UNKNOWN)) {
+      return TestState.UNKNOWN;
+    } else {
+      return TestState.PASS;
+    }
+  };
+
+  const runTests = async () => {
+    if (buttonMessage === "Running...") return;
+    setButtonMessage("Running...");
+    setTestState(TestState.PENDING);
+
+    // Reset all test statuses to pending
+    setTests((prevTests) =>
+      prevTests.map((test) => ({ ...test, status: TestState.PENDING }))
     );
 
-    const [buttonMessage, setButtonMessage] = useState("Run Tests");
-    const [testState, setTestState] = useState<TestState | undefined>(undefined);
-
-    const checkTests = (tests: Test[]): boolean => {
-        for (let i = 0; i < tests.length; i++) {
-            if (tests[i].status === "fail") {
-                return false;
-            }
-        }
-        return true;
-    };
-
-    const runTests = async () => {
-        if (buttonMessage === "Running...") return;
-        setButtonMessage("Running...");
-        setTestState("pending");
-        
-
-        // Reset all test statuses to pending
-        setTests((prevTests) =>
-        prevTests.map((test) => ({ ...test, status: "pending" }))
-        );
-
-        // Run all tests and update statuses
-        const promises = testEntries.map(([name, testFunc], index) =>
-        Promise.resolve()
-            .then(() => testFunc())
-            .then(
-            (result) => {
-                setTests((prevTests) => {
-                const newTests = [...prevTests];
-                newTests[index] = {
-                    ...newTests[index],
-                    status: result ? "pass" : "fail",
-                };
-                return newTests;
-                });
-            },
-            () => {
-                setTests((prevTests) => {
-                const newTests = [...prevTests];
-                newTests[index] = { ...newTests[index], status: "fail" };
-                return newTests;
-                });
-            }
-            )
-        );
-
-        await Promise.all(promises);
-
-        
-        setTests((prevTests) => {
-            const allPassed = checkTests(prevTests);
-            setTestState(allPassed ? "pass" : "fail");
-            return prevTests;
-        });
-        
-        setButtonMessage("Run Tests");
-    };
-
-    useEffect(() => {
-        // console.log(testState);
-        if (testState === "pass") {
-        colorUpdateFunction(COLORS.jade);
-        } else if (testState === "fail") {
-        colorUpdateFunction(COLORS.red);
-        }
-        else if (testState === "pending") {
-        colorUpdateFunction(COLORS.yellow);
-        }
-        else {
-        colorUpdateFunction(COLORS.default);
-        }}, [colorUpdateFunction, testState]);
-
-    return (
-        <>
-        <div className="RunTestsButton" onClick={runTests}>
-            {buttonMessage}
-        </div>
-
-        <ul className="TestList">
-            {tests.map((test, index) => (
-            <li
-                key={index}
-                style={{
-                display: "flex",
-                justifyContent: "space-between",
-                borderBottom: "1px solid #ccc",
-                padding: "1rem",
-                marginLeft: "1rem",
-                marginRight: "1rem",
-                fontSize: "1rem",
-                }}
-            >
-                <span>{test.name}</span>
-                <span>{statusIcons[test.status]}</span>
-            </li>
-            ))}
-        </ul>
-        </>
+    // Run all tests and update statuses
+    const promises = testEntries.map(([name, testFunc], index) =>
+      Promise.resolve()
+        .then(() => testFunc())
+        .then(
+          (result: TestState) => {
+            setTests((prevTests) => {
+              const newTests = [...prevTests];
+              newTests[index] = {
+                ...newTests[index],
+                status: result,
+              };
+              return newTests;
+            });
+          },
+          () => {
+            setTests((prevTests) => {
+              const newTests = [...prevTests];
+              newTests[index] = {
+                ...newTests[index],
+                status: TestState.FAIL,
+              };
+              return newTests;
+            });
+          }
+        )
     );
+
+    await Promise.all(promises);
+
+    setButtonMessage("Run Tests");
+  };
+
+  // Update the overall test state whenever individual tests change
+  useEffect(() => {
+    const overallStatus = checkTests(tests);
+    setTestState(overallStatus);
+  }, [tests]);
+
+  // Update the color based on the overall test state
+  useEffect(() => {
+    if (testState === TestState.PENDING) {
+      colorUpdateFunction(COLORS.yellow);
+    } else if (testState === TestState.PASS) {
+      colorUpdateFunction(COLORS.jade);
+    } else if (testState === TestState.FAIL) {
+      colorUpdateFunction(COLORS.red);
+    } else {
+      colorUpdateFunction(COLORS.default);
+    }
+  }, [colorUpdateFunction, testState]);
+
+  return (
+    <>
+      <div className="RunTestsButton" onClick={runTests}>
+        {buttonMessage}
+      </div>
+
+      <ul className="TestList">
+        {tests.map((test, index) => (
+          <li
+            key={index}
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              borderBottom: "1px solid #ccc",
+              padding: "1rem",
+              marginLeft: "1rem",
+              marginRight: "1rem",
+              fontSize: "1rem",
+            }}
+          >
+            <span>{test.name}</span>
+            <span>{statusIcons[test.status]}</span>
+          </li>
+        ))}
+      </ul>
+    </>
+  );
 }
