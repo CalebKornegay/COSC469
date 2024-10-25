@@ -1,13 +1,13 @@
+import { BASEURL } from "../const";
 import getCurrentTabURL from "../hooks/getCurrentTabURL";
 
 export default async function CheckAgainstDatabase(): Promise<boolean> {
-    const baseurl = "https://phish.gannaway.co/db/?url=";
 
     try {
         const currenturl = await getCurrentTabURL();
         let httpurl = currenturl.replace("https://", "http://");
 
-        const response = await fetch(baseurl + httpurl);
+        const response = await fetch(`${BASEURL}/db/?url=${httpurl}`);
         const data = await response.json();
 
         if (data["error"]) return true;

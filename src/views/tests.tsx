@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {colors} from "../const/colors";
+import {COLORS} from "../const";
 import * as TestFiles from "../tests";
 
 const statusIcons = {
@@ -89,15 +89,15 @@ export default function Tests({ colorUpdateFunction }: TestProps) {
     useEffect(() => {
         // console.log(testState);
         if (testState === "pass") {
-        colorUpdateFunction(colors.jade);
+        colorUpdateFunction(COLORS.jade);
         } else if (testState === "fail") {
-        colorUpdateFunction(colors.red);
+        colorUpdateFunction(COLORS.red);
         }
         else if (testState === "pending") {
-        colorUpdateFunction(colors.yellow);
+        colorUpdateFunction(COLORS.yellow);
         }
         else {
-        colorUpdateFunction(colors.default);
+        colorUpdateFunction(COLORS.default);
         }}, [colorUpdateFunction, testState]);
 
     return (
