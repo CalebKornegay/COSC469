@@ -4,6 +4,7 @@ export enum TestState {
     PENDING,
     DISABLED,
     UNKNOWN,
+    ERROR
 };
 
 export type Test = {

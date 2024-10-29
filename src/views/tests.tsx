@@ -9,6 +9,7 @@ const statusIcons = {
   [TestState.PENDING]: "⏳",
   [TestState.DISABLED]: "🚫",
   [TestState.UNKNOWN]: "❔",
+  [TestState.ERROR]: "⚠️",
 };
 
 type TestProps = {
@@ -72,7 +73,7 @@ export default function Tests({ colorUpdateFunction }: TestProps) {
               const newTests = [...prevTests];
               newTests[index] = {
                 ...newTests[index],
-                status: TestState.FAIL,
+                status: TestState.ERROR,
               };
               return newTests;
             });
