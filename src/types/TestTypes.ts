@@ -1,10 +1,10 @@
 export enum TestState {
-    PASS,
-    FAIL,
-    PENDING,
-    DISABLED,
-    UNKNOWN,
-    ERROR
+    PASS = "PASS",
+    FAIL = "FAIL",
+    PENDING = "PENDING",
+    DISABLED = "DISABLED",
+    UNKNOWN = "UNKNOWN",
+    ERROR = "ERROR",
 };
 
 export type Test = {

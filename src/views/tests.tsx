@@ -126,7 +126,7 @@ export default function Tests({ colorUpdateFunction }: TestProps) {
             }}
           >
             <span>{test.name}</span>
-            <span>{statusIcons[test.status]}</span>
+            <span title={test.status}>{statusIcons[test.status]}</span>
           </li>
         ))}
       </ul>
