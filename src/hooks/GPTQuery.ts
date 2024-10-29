@@ -13,9 +13,9 @@ export default async function GPTQuery(query:string) {
             messages: [{ role: "system", content: query }],
             model: "gpt-4o",
         }).then((resp => {
-            resolve(resp?.choices?.[0]?.message?.content ?? "Yes");
+            resolve(resp?.choices?.[0]?.message?.content ?? "");
         })).catch((_ => {
-            resolve("Yes");
+            reject("An error occured while querying OpenAI. Is your key valid?");
         }));
     });
 }

@@ -12,7 +12,7 @@ export default async function dnsCheck(): Promise<TestState> {
     let ttl: number | undefined = undefined;
     for (let i = 0; i < json?.Answer?.length; ++i) {
         ttl = json?.Answer?.[i]?.TTL;
-        if (ttl && ttl > 3000) {
+        if (ttl && ttl > 3600) {
             console.log('ttl: ' + ttl);
             return TestState.FAIL;
         }
@@ -20,7 +20,7 @@ export default async function dnsCheck(): Promise<TestState> {
 
     for (let i = 0; i < json?.Authority?.length; ++i) {
         ttl = json?.Authority?.[i]?.TTL;
-        if (ttl && ttl > 3000) {
+        if (ttl && ttl > 3600) {
             console.log('ttl: ' + ttl);
             return TestState.FAIL;
         }
