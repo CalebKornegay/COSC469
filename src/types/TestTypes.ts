@@ -11,3 +11,9 @@ export type Test = {
     name: String;
     status: TestState;
 };
+
+export type TestHistory = {
+    url: String;
+    timestamp: String;
+    results: Test[];
+};

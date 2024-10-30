@@ -27,6 +27,21 @@ export default function Settings({settingsOpen, setSettingsOpen}: childprops) {
 
     const handleCostlyInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setCostlyTests(event.target.checked);
+    };
+
+    const handleSavedTestsReset = () => {
+        localStorage.removeItem('testHistory');
+        alert('Saved tests cleared');
+    };
+
+    const handleSavedTestDownload = () => {
+        const testHistory = JSON.parse(localStorage.getItem('testHistory') || '[]');
+        const blob = new Blob([JSON.stringify(testHistory)], {type: 'application/json'});
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'testHistory.json';
+        a.click();
     }
 
     return (
@@ -42,6 +57,8 @@ export default function Settings({settingsOpen, setSettingsOpen}: childprops) {
                 <label>Enable Costly Tests: </label>
                 <input name='costly_input' id='costly_input' type='checkbox' checked={costlyTests} onChange={handleCostlyInputChange}></input>
                 </div>
+                <button className='RunTestsButton' onClick={handleSavedTestsReset}>Clear Saved Tests</button>
+                <button className='RunTestsButton' onClick={handleSavedTestDownload}>Download Tests</button>
             </>
             : null}
         </div>

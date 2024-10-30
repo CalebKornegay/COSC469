@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { COLORS } from "../const";
 import * as TestFiles from "../tests";
-import { Test, TestState } from "../types";
+import { Test, TestHistory, TestState } from "../types";
+import getCurrentTabURL from "../hooks/getCurrentTabURL";
 
 const statusIcons = {
   [TestState.PASS]: "✔",
@@ -25,6 +26,17 @@ export default function Tests({ colorUpdateFunction }: TestProps) {
 
   const [buttonMessage, setButtonMessage] = useState("Run Tests");
   const [testState, setTestState] = useState<TestState>(TestState.UNKNOWN);
+
+    const updateTestHistory = async (localTests: Test[]) => {
+        const testHistoryEntry: TestHistory = {
+            url: await getCurrentTabURL(),
+            timestamp: new Date().toISOString(),
+            results: localTests,
+        };
+        let testHistory: TestHistory[] = JSON.parse(localStorage.getItem("testHistory") || "[]");
+        testHistory.push(testHistoryEntry);
+        localStorage.setItem("testHistory", JSON.stringify(testHistory));
+    };
 
   // Function to determine the overall test state
   const checkTests = (tests: Test[]): TestState => {
@@ -53,6 +65,9 @@ export default function Tests({ colorUpdateFunction }: TestProps) {
       prevTests.map((test) => ({ ...test, status: TestState.PENDING }))
     );
 
+    // Local copy for saving test results
+    let localTests: Test[] = [...tests];
+
     // Run all tests and update statuses
     const promises = testEntries.map(([name, testFunc], index) =>
       Promise.resolve()
@@ -67,6 +82,7 @@ export default function Tests({ colorUpdateFunction }: TestProps) {
               };
               return newTests;
             });
+            localTests[index] = {...localTests[index], status: result};
           },
           () => {
             setTests((prevTests) => {
@@ -77,11 +93,13 @@ export default function Tests({ colorUpdateFunction }: TestProps) {
               };
               return newTests;
             });
+            localTests[index] = {...localTests[index], status: TestState.ERROR};
           }
         )
     );
 
     await Promise.all(promises);
+    await updateTestHistory(localTests);
 
     setButtonMessage("Run Tests");
   };
