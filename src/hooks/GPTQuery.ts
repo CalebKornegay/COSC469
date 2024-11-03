@@ -1,6 +1,6 @@
 import OpenAI from "openai";
 
-export default async function GPTQuery(query:string) {
+export default async function GPTQuery(query:string) : Promise<string> {
     const api_key = localStorage.getItem('api_key');
 
     const openai = new OpenAI({

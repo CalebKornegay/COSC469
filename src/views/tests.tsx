@@ -11,6 +11,7 @@ const statusIcons = {
   [TestState.DISABLED]: "🚫",
   [TestState.UNKNOWN]: "❔",
   [TestState.ERROR]: "⚠️",
+  [TestState.INCONCLUSIVE]: "❓",
 };
 
 type TestProps = {

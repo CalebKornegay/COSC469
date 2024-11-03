@@ -5,6 +5,7 @@ export enum TestState {
     DISABLED = "DISABLED",
     UNKNOWN = "UNKNOWN",
     ERROR = "ERROR",
+    INCONCLUSIVE = "INCONCLUSIVE",
 };
 
 export type Test = {
