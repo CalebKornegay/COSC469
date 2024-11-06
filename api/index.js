@@ -11,6 +11,37 @@ const logRequest = (req, res, next) => {
     next();
 }
 
+async function check_certificate_authority(cert) {
+    // console.log(cert.CN);
+    try {
+        const fileStream = fs.createReadStream('certs.txt');
+
+        const rl = readline.createInterface({
+            input: fileStream,
+            // crlfDelay: Infinity,
+        });
+
+        let sub_root, root, root_comp;
+        if (cert.CCC2 !== undefined) {
+            sub_root = cert.CCC2?.subject?.CN;
+            root = cert.CCC2?.issuer?.CN;
+            root_comp = cert.CCC2?.issuer?.O;
+        }
+
+        for await (let line of rl) {
+            line = line.trim().split('___');
+            if (line.includes(sub_root) || line.includes(root) || line.includes(root_comp)) {
+                return true;
+            }
+        }
+
+        return false;
+    } catch (err) {
+        console.error(`Error reading file: ${err}`);
+        return true;
+    }
+}
+
 async function get_peer_certificate(url) {
     return new Promise( (resolve, reject) => {
         const socket = tls.connect({host: url, port: 443, rejectUnauthorized: false, servername: 'localhost'}, () => {
@@ -35,7 +66,8 @@ async function get_peer_certificate(url) {
                 }
             };
             // console.log(JSON.stringify(response));
-            resolve(JSON.stringify(response));
+            // resolve(JSON.stringify(response));
+            resolve(response);
         });
         socket.on('error', (error) => {
             reject(JSON.stringify({reason : error}));
@@ -88,7 +120,8 @@ app.get("/cert", async (req, res) => {
         return res.status(400).send({ error : "url parameter is required" });
     }
     try {
-        return res.send({ cert: await get_peer_certificate(url)});
+        const cert = await get_peer_certificate(url);
+        return res.send({ trusted: await check_certificate_authority(cert) });
     } catch(error) {
         return res.status(400).send( { error: error });
     }
