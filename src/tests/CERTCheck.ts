@@ -10,6 +10,5 @@ export default async function CERTCheck(): Promise<TestState>{
     
     const resp = await fetch(`${BASEURL}/cert/url=${query_url}`);
     const json: any = await resp.json();
-    console.log(json);
-    return TestState.FAIL;
+    return json.trusted;
 }
