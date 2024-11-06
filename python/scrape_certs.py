@@ -22,14 +22,14 @@ def get_ca_certs() -> list[tuple[str, str]]:
     for entry in table:
         try:
             cols = entry.decode_contents().split('<p')[1:3]
-            cert_list.append(cols[0].split('</p>')[0].split('">')[1].strip() + "," + cols[1].split('</p>')[0].split('">')[1].strip())
+            cert_list.append(cols[0].split('</p>')[0].split('">')[1].strip() + "___" + cols[1].split('</p>')[0].split('">')[1].strip())
         except: pass
 
     return cert_list
 
 if __name__ == "__main__":
     try:
-        with open('certs.txt', 'w', encoding='utf16') as f:
+        with open('certs.txt', 'w', encoding='utf8') as f:
             f.write("\n".join(get_ca_certs()))
     except Exception as e:
         print(e)
