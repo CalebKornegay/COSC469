@@ -30,6 +30,7 @@ async function check_certificate_authority(cert) {
 
         for await (let line of rl) {
             line = line.trim().split('___');
+            console.log(line, sub_root, root, root_comp);
             if (line.includes(sub_root) || line.includes(root) || line.includes(root_comp)) {
                 return true;
             }
@@ -44,7 +45,7 @@ async function check_certificate_authority(cert) {
 
 async function get_peer_certificate(url) {
     return new Promise( (resolve, reject) => {
-        const socket = tls.connect({host: url, port: 443, rejectUnauthorized: false, servername: 'localhost'}, () => {
+        const socket = tls.connect({host: url, port: 443, rejectUnauthorized: false, servername: url}, () => {
             const cert = socket.getPeerCertificate(true);
             const response = {
                 CN: cert?.subject?.CN,
