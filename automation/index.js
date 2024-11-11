@@ -12,7 +12,7 @@ const URLQuery =
     "What is the current URL for the following brand. Only respond with the URL itself or with 'Unknown' if you cannot determine the URL. Brand: ";
 const DatabaseFile = "./db.txt"; // Doesn't exist
 
-const tests = ["cert", "db", "dns", "footer", "ml", "url"];
+const tests = ["cert", "db", "dns", /*"footer",*/ "ml", "url"];
 
 async function GPTQuery(query) {
     const openai = new OpenAI({
@@ -188,8 +188,31 @@ const rl = readline.createInterface({
 });
 
 for await (const line of rl) {
-    const website = line.trim();
-    const results = await Promise.all([ CERTCheck(website), CheckAgainstDatabase(website), dnsCheck(website), FooterCheck(website), MLCheck(website), URLCheck(website)]);
+    let website = line.trim();
+    if (!website.includes('https://') && !website.includes('http://')) {
+        website = "https://" + website;
+    }
+    let good = false;
+
+    try{
+        const resp = await fetch(website);
+        if (resp.ok) good = true;
+    } catch (_) {}
+
+    if (website.includes('https://')) {
+        website = website.replace("https://", "http://");
+    } else {
+        website = website.replace('http://', 'https://');
+    }
+    if (!good) {
+        try {
+            const resp = await fetch(website);
+            if (resp.ok) good = true;
+        } catch(_) {}
+    }
+    if (!good) continue;
+
+    const results = await Promise.all([CERTCheck(website), CheckAgainstDatabase(website), dnsCheck(website), /*FooterCheck(website),*/ MLCheck(website), URLCheck(website)]);
 
     let json = {website: website};
     results.forEach((result, index) => {
