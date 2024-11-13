@@ -163,7 +163,7 @@ async function MLCheck(url) {
 }
 
 async function URLCheck(url) {
-    return await GPTQuery("Does this site look like a phishing URL? Answer 'Yes' or 'No' only please: " + url)
+    return await GPTQuery("Does this site look like a phishing URL? Answer 'Yes' or 'No' only please: " + url.replace('https://', '').replace('http://', ''))
     .then((response) => {
         if (response === "No") {
             return "pass";
@@ -199,12 +199,12 @@ for await (const line of rl) {
         if (resp.ok) good = true;
     } catch (_) {}
 
-    if (website.includes('https://')) {
-        website = website.replace("https://", "http://");
-    } else {
-        website = website.replace('http://', 'https://');
-    }
     if (!good) {
+        if (website.includes('https://')) {
+            website = website.replace("https://", "http://");
+        } else {
+            website = website.replace('http://', 'https://');
+        }
         try {
             const resp = await fetch(website);
             if (resp.ok) good = true;
