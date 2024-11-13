@@ -138,7 +138,7 @@ def extract_features(url:str):
 
     # Calculate F9: Number of question marks in URL
     F9 = url.count('?')
-    features[column_titles[8]] = F8
+    features[column_titles[8]] = F9
 
     # Calculate F10: Number of equal signs in URL;
     F10 = url.count('=')
