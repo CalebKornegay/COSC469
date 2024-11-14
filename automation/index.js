@@ -189,36 +189,37 @@ const rl = readline.createInterface({
 
 for await (const line of rl) {
     let website = line.trim();
+    let phishing = false;
+    let good = false;
+
     if (!website.includes('https://') && !website.includes('http://')) {
         website = "https://" + website;
+    } else { // All the phishing URLs already had a method associated with them
+        phishing = true;
     }
-    let good = false;
 
     try{
         const resp = await fetch(website);
         if (resp.ok) good = true;
     } catch (_) {}
 
-    if (!good) {
-        if (website.includes('https://')) {
-            website = website.replace("https://", "http://");
-        } else {
-            website = website.replace('http://', 'https://');
-        }
+    if (!good && !phishing) {
+        website = website.replace("https://", "http://");
         try {
             const resp = await fetch(website);
             if (resp.ok) good = true;
         } catch(_) {}
     }
+
     if (!good) continue;
 
     const results = await Promise.all([CERTCheck(website), CheckAgainstDatabase(website), dnsCheck(website), /*FooterCheck(website),*/ MLCheck(website), URLCheck(website)]);
 
-    let json = {website: website};
+    let json = {website: website, isPhishing: phishing};
     results.forEach((result, index) => {
         json[tests[index]] = result === "fail" ? false : true;
     });
-    console.log(json);
+    console.log(JSON.stringify(json));
 }
 
 export {};
