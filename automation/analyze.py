@@ -19,7 +19,7 @@ for index, result in enumerate(test_results):
     result_status: dict = eval(result)
     non_phishing += result_status["isPhishing"] == False
     phishing += result_status["isPhishing"] == True
-    if non_phishing == phishing: break
+    # if non_phishing == phishing: break
     correct: bool = True
 
     for test_index, test in enumerate(tests):
@@ -33,10 +33,10 @@ for index, result in enumerate(test_results):
     num_correct += correct
 
 for test_index, test in enumerate(tests):
-    print(f"True positive rate for {test} test = {t_pos[test_index] / (phishing + non_phishing) * 100}%")
-    print(f"False positive rate for {test} test = {f_pos[test_index] / (phishing + non_phishing) * 100}%")
-    print(f"True negative rate for {test} test = {t_neg[test_index] / (phishing + non_phishing) * 100}%")
-    print(f"False negative rate for {test} test = {f_neg[test_index] / (phishing + non_phishing) * 100}%")
+    print(f"True positive rate for {test} test = {t_pos[test_index] / (t_pos[test_index] + f_neg[test_index]) * 100}%")
+    print(f"False positive rate for {test} test = {f_pos[test_index] / (f_pos[test_index] + t_neg[test_index]) * 100}%")
+    print(f"True negative rate for {test} test = {t_neg[test_index] / (t_neg[test_index] + f_pos[test_index]) * 100}%")
+    print(f"False negative rate for {test} test = {f_neg[test_index] / (f_neg[test_index] + t_pos[test_index]) * 100}%")
     print(f"Accuracy for {test} test is {(t_pos[test_index] + t_neg[test_index]) / (phishing + non_phishing) * 100}%")
 
 print(f"Overall testing accuracy is {num_correct / (phishing + non_phishing) * 100}%")
