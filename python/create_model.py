@@ -7,12 +7,13 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import classification_report
+from sklearn.metrics import ConfusionMatrixDisplay
 import pickle
 import warnings
 
 warnings.filterwarnings('ignore')
 
-df= pd.read_csv('Dataset.csv')
+df= pd.read_csv('training_dataset.csv')
 
 # Assuming df is your DataFrame
 X = df.iloc[:,1:]  #features
@@ -60,4 +61,8 @@ with open(model_pkl_file, 'wb') as file:
     pickle.dump(rfc, file)
 
 # Visualize the graph
+plt.show()
+display=ConfusionMatrixDisplay(confusion_matrix=cm)
+plt.clf()
+display.plot()
 plt.show()

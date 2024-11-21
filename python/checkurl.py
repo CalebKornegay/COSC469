@@ -310,7 +310,6 @@ def extract_features(url:str):
 
 # url = "https://becomingthejoat.co/admin/index.php"
 # url2 = "https://www.angelfire.com/goth/devilmay
-# extract_feat
 # extract_features(url2)
 
 def main(args):
