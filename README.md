@@ -1,6 +1,6 @@
-# COSC 469 Anti-Phishin Browsin-Extension (APeBEhavior)
+# COSC 469 Anti-Phishin Browsin-Extension
 
-We are trying to stop people from getting phished using ape methods.
+We are trying to stop people from getting phished.
 
 ## Requirements
 
