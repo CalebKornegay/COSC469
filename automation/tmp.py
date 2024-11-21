@@ -9,5 +9,5 @@ for i in s:
             w.append(i.strip()[:-2]+"\n")
     except: pass
 
-with open('db.txt', 'w', encoding='utf8') as f:
-    f.writelines(w[:500])
+with open('footer_nonphish_5k.txt', 'w', encoding='utf8') as f:
+    f.writelines(w[:5000])

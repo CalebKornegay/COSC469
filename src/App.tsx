@@ -17,7 +17,7 @@ export default function App() {
         <div className="App">
             <Main bgcolor={color}>
                 <div className="AppHeader">
-                    APeBEhavior
+                    Anti-Phish
                 </div>
                 <div className="AppSubheader">Anti-Phishing Browsing Extension</div>
                 <Settings settingsOpen={settingsOpen} setSettingsOpen={setSettingsOpen}/>

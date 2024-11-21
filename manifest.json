@@ -1,8 +1,8 @@
 {
   "version": "1.0.0",
   "manifest_version": 3,
-  "name": "APeBEhavior",
-  "description": "*monkey noises*",
+  "name": "Anti-Phish",
+  "description": "Anti-Phishing Browser Extension",
   "action": {
     "default_popup": "js/index.html",
     "default_title": "APeBEhavior"

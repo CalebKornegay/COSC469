@@ -4,13 +4,13 @@ import readline from 'readline';
 import { JSDOM } from 'jsdom';
 global.DOMParser = new JSDOM().window.DOMParser;
 
-const api_key = ""; // Could use ENV variable here if we want
+const api_key = "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"; // Could use ENV variable here if we want
 const BASEURL = "https://phish.gannaway.co";
 const BrandQuery =
     "The following is the HTML for the footer of a website. Your job is to identify the brand of the website. You may only respond with the brand name itself, or with 'Unknown' if you cannot determine the brand. Footer: ";
 const URLQuery =
     "What is the current URL for the following brand. Only respond with the URL itself or with 'Unknown' if you cannot determine the URL. Brand: ";
-const DatabaseFile = "footer_phishing2.txt"; // Doesn't exist
+const DatabaseFile = "footer_nonphish_1k.txt"; // Doesn't exist
 
 //const tests = ["cert", "db", "dns", /*"footer",*/ "ml", "url"];
 const tests =  ["footer"];

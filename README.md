@@ -15,3 +15,7 @@ Run `npm run build` to build the project.
 ## Load into browser
 
 To load the extension into the chrome browser go to the extensions page of the browser. In the top right turn on Developer Mode. In the top left select load unpacked. Select the dist folder that was generated in the root directory.
+
+## Api
+
+The api is currently live at https://phish.gannaway.co. It will be up until January 2025.
