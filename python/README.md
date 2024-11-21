@@ -8,7 +8,7 @@ These were used to generate the model used in MLQuery. Some form of this runs on
 ## Requirements
 
 * [Dataset.csv](https://data.mendeley.com/datasets/6tm2d6sz7p/1)
-* [PhishBenignDataset]()
+* [PhishBenignDataset](https://huggingface.co/datasets/itsprofarul/dataset-phishing2)
 * `pip install numpy pandas matplotlib seaborn scikit-learn pickle`
 
 ## Where is the model?
